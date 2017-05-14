@@ -36,6 +36,22 @@ public class LeiloesSystemTest {
 		
 		assertTrue(leiloes.existe("geladeira", 45, "maria", true));
 	}
+	@Test
+	public void naoDeveCadastrarUmLeilaoSemNome(){
+		leiloes.visita();
+		NovoLeilaoPage novoLeilao = leiloes.novo();
+		novoLeilao.preenche("", 45, "maria", true);
+		
+		assertTrue(novoLeilao.validaNomeObrigatorio());
+	}
+	@Test
+	public void naoDeveCadastrarUmLeilaoSemValor(){
+		leiloes.visita();
+		NovoLeilaoPage novoLeilao = leiloes.novo();
+		novoLeilao.preenche("semValor", 0, "maria", true);
+		
+		assertTrue(novoLeilao.validaValorObrigatorio());
+	}
 	@After
     public void finaliza() {
 		driver.close();
