@@ -22,34 +22,29 @@ public class LeiloesSystemTest {
 		
 		UsuariosPage usuarios = new UsuariosPage(driver);
 		usuarios.visita();
-		if (usuarios.existeNaListagem("maria", "maria@gmail.com")){
-			return;
-		}else{
-			usuarios.novo().cadastro("maria", "maria@gmail.com");
+		if (usuarios.existeNaListagem("teste fulano", "fulano@gmail.com") == false){
+			usuarios.novo().cadastro("teste fulano", "fulano@gmail.com");
 		}
 	}
 	@Test
 	public void deveCadastrarUmLeilao(){
 		leiloes.visita();
 		NovoLeilaoPage novoLeilao = leiloes.novo();
-		novoLeilao.preenche("geladeira", 45, "maria", true);
-		
-		assertTrue(leiloes.existe("geladeira", 45, "maria", true));
+		novoLeilao.preenche("geladeira", 45, "teste fulano", true);
+		assertTrue(leiloes.existe("geladeira", 45, "teste fulano", true));
 	}
 	@Test
 	public void naoDeveCadastrarUmLeilaoSemNome(){
 		leiloes.visita();
 		NovoLeilaoPage novoLeilao = leiloes.novo();
-		novoLeilao.preenche("", 45, "maria", true);
-		
+		novoLeilao.preenche("", 45, "teste fulano", true);
 		assertTrue(novoLeilao.validaNomeObrigatorio());
 	}
 	@Test
 	public void naoDeveCadastrarUmLeilaoSemValor(){
 		leiloes.visita();
 		NovoLeilaoPage novoLeilao = leiloes.novo();
-		novoLeilao.preenche("semValor", 0, "maria", true);
-		
+		novoLeilao.preenche("semValor", 0, "teste fulano", true);
 		assertTrue(novoLeilao.validaValorObrigatorio());
 	}
 	@After

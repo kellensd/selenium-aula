@@ -19,6 +19,16 @@ public class NovoUsuarioPage {
         txtemail.sendKeys(email);
         botaoSalvar.submit();
 	}
+	public void altera(String nome, String email){
+        WebElement txtnome = driver.findElement(By.name("usuario.nome"));
+        WebElement txtemail = driver.findElement(By.name("usuario.email"));
+        WebElement botaoSalvar =  driver.findElement(By.id("btnSalvar"));
+        txtnome.clear();
+        txtemail.clear();
+        txtnome.sendKeys(nome);
+        txtemail.sendKeys(email);
+        botaoSalvar.submit();
+	}
 	public boolean validacaoDeNomeObrigatorio() {
         return driver.getPageSource().contains("Nome obrigatorio!");
     }
