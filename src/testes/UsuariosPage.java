@@ -28,4 +28,9 @@ public class UsuariosPage {
 		Alert alert = driver.switchTo().alert();
 		alert.accept();
 	}
+	public void alteraUsuarioPage(){
+		int posicao = 1;
+		driver.findElements(By.linkText("editar")).get(posicao-1).click();
+	}
+	
 }

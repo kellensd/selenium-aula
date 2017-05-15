@@ -11,15 +11,17 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class AddUser {
+public class UsuariosSystemTest {
 	private WebDriver driver;
 	private UsuariosPage usuarios;
+	private NovoUsuarioPage newuserpage;
 	
 	@Before
     public void inicializa() {
 		System.setProperty("webdriver.chrome.driver", "C:/chromedriver.exe");
 		this.driver = new ChromeDriver();
 		this.usuarios = new UsuariosPage(driver);
+		this.newuserpage = new NovoUsuarioPage(driver);
 		usuarios.visita();
     }	
 	@Test
@@ -41,9 +43,20 @@ public class AddUser {
 		WebDriverWait wait = new WebDriverWait(driver, 10);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.linkText("Novo Usuário")));
 		assertTrue(usuarios.existeNaListagem("teste dois", "dois@gmail.com"));
-		usuarios.excluirUsuarioPosicao(2);     
+		usuarios.excluirUsuarioPosicao(4);     
 		assertFalse(usuarios.existeNaListagem("teste dois", "dois@gmail.com"));
     }
+	@Test
+    public void deveAlterarUmUsuario() {
+		usuarios.novo().cadastro("aaaamelia", "amelia@gmail.com");
+		WebDriverWait wait = new WebDriverWait(driver, 10);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.linkText("Novo Usuário")));
+		assertTrue(usuarios.existeNaListagem("aaaamelia", "amelia@gmail.com"));
+		usuarios.alteraUsuarioPage();
+		newuserpage.cadastro("testeAmelia", "testeAmelia@gmail.com");
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.linkText("Novo Usuário")));
+		assertTrue(usuarios.existeNaListagem("testeAmelia", "testeAmelia@gmail.com"));
+	}
 	@After
     public void finaliza() {
 		driver.close();
